@@ -26,8 +26,29 @@
   background-color: #ecf1f4;
 }
 
+.ContactListBox {
+  display: flex;
+  width: 100%;
+}
+
 .ContactListName {
-  margin: 0 20px 0 0;
+  margin-right: auto;
+}
+
+.ContactListNumber {
+  text-decoration: none;
+  /* font-size: larger; */
+  font-weight: 500;
+  color: #1a73e8;
+}
+
+.ContactListNumber:hover,
+.ContactListNumber:focus {
+  text-decoration: underline;
+}
+
+.ContactListBtn {
+  margin-left: 10px;
 }
 
 .contBtn {

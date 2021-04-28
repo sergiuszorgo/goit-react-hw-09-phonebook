@@ -1,5 +1,5 @@
-import React from 'react'; //!
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react'; //!
+import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../redux/auth';
 
 const styles = {
@@ -13,21 +13,37 @@ const styles = {
   },
 };
 
-const UserMenu = ({ name, onLogout }) => (
-  <div style={styles.container}>
-    <span style={styles.name}>Welcome, {name}</span>
-    <button type="button" onClick={onLogout}>
-      Logout
-    </button>
-  </div>
-);
+export default function UserMenu() {
+  const dispatch = useDispatch();
+  const name = useSelector(authSelectors.getUserName);
+  const onLogout = useCallback(() => {
+    dispatch(authOperations.logOut());
+  }, [dispatch]);
+  return (
+    <div style={styles.container}>
+      <span style={styles.name}>Welcome, {name}</span>
+      <button className="outBtn" type="button" onClick={onLogout}>
+        <span class="material-icons outlined">logout</span>
+      </button>
+    </div>
+  );
+}
 
-const mapStateToProps = state => ({
-  name: authSelectors.getUserName(state),
-});
+// const UserMenu = ({ name, onLogout }) => (
+//   <div style={styles.container}>
+//     <span style={styles.name}>Welcome, {name}</span>
+//     <button type="button" onClick={onLogout}>
+//       Logout
+//     </button>
+//   </div>
+// );
 
-const mapDispatchToProps = {
-  onLogout: authOperations.logOut,
-};
+// const mapStateToProps = state => ({
+//   name: authSelectors.getUserName(state),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+// const mapDispatchToProps = {
+//   onLogout: authOperations.logOut,
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

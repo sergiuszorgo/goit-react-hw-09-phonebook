@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'; //!
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { authSelectors } from '../redux/auth';
 
@@ -15,26 +15,48 @@ const styles = {
     color: '#E84A5F',
   },
 };
-const Navigation = ({ isAuthenticated }) => (
-  <nav>
-    <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
-      Home
-    </NavLink>
-    {isAuthenticated && (
-      <NavLink
-        to="/contacts"
-        exact
-        style={styles.link}
-        activeStyle={styles.activeLink}
-      >
-        Contacts
+
+export default function Navigation() {
+  const isAuthenticated = useSelector(authSelectors.getIsAuthenticated);
+  return (
+    <nav>
+      <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
+        Home
       </NavLink>
-    )}
-  </nav>
-);
+      {isAuthenticated && (
+        <NavLink
+          to="/contacts"
+          exact
+          style={styles.link}
+          activeStyle={styles.activeLink}
+        >
+          Contacts
+        </NavLink>
+      )}
+    </nav>
+  );
+}
 
-const mapStateToProps = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
+// const Navigation = ({ isAuthenticated }) => (
+//   <nav>
+//     <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
+//       Home
+//     </NavLink>
+//     {isAuthenticated && (
+//       <NavLink
+//         to="/contacts"
+//         exact
+//         style={styles.link}
+//         activeStyle={styles.activeLink}
+//       >
+//         Contacts
+//       </NavLink>
+//     )}
+//   </nav>
+// );
 
-export default connect(mapStateToProps)(Navigation);
+// const mapStateToProps = state => ({
+//   isAuthenticated: authSelectors.getIsAuthenticated(state),
+// });
+
+// export default connect(mapStateToProps)(Navigation);
